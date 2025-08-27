@@ -122,15 +122,15 @@ lusc_patches_norm = load_patches_from_individual_files(preprocessed_patches_dir_
 coad_patches = load_patches_from_individual_files(preprocessed_patches_dir_coad, normalized=False)
 coad_patches_norm = load_patches_from_individual_files(preprocessed_patches_dir_coad, normalized=True)
 
-brca_embeddings = embed_patches(brca_patches, model, preprocess, device, "BRCA original")
-luad_embeddings = embed_patches(luad_patches, model, preprocess, device, "LUAD original")
-lusc_embeddings = embed_patches(lusc_patches, model, preprocess, device, "LUSC original")
-coad_embeddings = embed_patches(coad_patches, model, preprocess, device, "COAD original")
+brca_embeddings = embed_patches(brca_patches, model, preprocess, device)
+luad_embeddings = embed_patches(luad_patches, model, preprocess, device)
+lusc_embeddings = embed_patches(lusc_patches, model, preprocess, device)
+coad_embeddings = embed_patches(coad_patches, model, preprocess, device)
 
-brca_embeddings_norm = embed_patches(brca_patches_norm, model, preprocess, device, "BRCA normalized")
-luad_embeddings_norm = embed_patches(luad_patches_norm, model, preprocess, device, "LUAD normalized")
-lusc_embeddings_norm = embed_patches(lusc_patches_norm, model, preprocess, device, "LUSC normalized")
-coad_embeddings_norm = embed_patches(coad_patches_norm, model, preprocess, device, "COAD normalized")
+brca_embeddings_norm = embed_patches(brca_patches_norm, model, preprocess, device)
+luad_embeddings_norm = embed_patches(luad_patches_norm, model, preprocess, device)
+lusc_embeddings_norm = embed_patches(lusc_patches_norm, model, preprocess, device)
+coad_embeddings_norm = embed_patches(coad_patches_norm, model, preprocess, device)
 
 num_brca = len(brca_embeddings)
 num_luad = len(luad_embeddings)

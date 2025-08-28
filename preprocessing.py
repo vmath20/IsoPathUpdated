@@ -8,6 +8,8 @@ from skimage import filters, color
 import openslide
 from tiatoolbox.tools.stainnorm import MacenkoNormalizer
 
+from constants import PROJECT_SAVE_DIR
+
 # Macenko normalizer
 def initialize_normalizer(target_image):
     norm = MacenkoNormalizer()
@@ -164,7 +166,7 @@ for cancer_type in ['COAD', 'BRCA', 'LUSC', 'LUAD']:
     sample_size = min(num_slides + 100, len(all_slides))
     sampled_slides = all_slides.sample(n=sample_size, random_state=42)
 
-    out_dir = f"/lotterlab/users/vmishra/RSA_updated101/preprocessed_patches_{cancer_type}/"
+    out_dir = f"{PROJECT_SAVE_DIR}/preprocessed_patches_{cancer_type}/"
     os.makedirs(out_dir, exist_ok=True)
     sampled_slides.to_csv(out_dir + f'sampled_{cancer_type}_slides.csv', index=False)
 

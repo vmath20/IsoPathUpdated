@@ -1,4 +1,5 @@
 # Comparing Computational Pathology Foundation Models using Representational Similarity Analysis
+
 [![Ask DeepWiki](https://devin.ai/assets/askdeepwiki.png)](https://deepwiki.com/vmath20/IsoPathUpdated)
 
 This repository contains the code and analysis pipeline for comparing the feature representations of various pretrained computational pathology models. The primary method used is Representational Similarity Analysis (RSA), applied to whole-slide image (WSI) patches from The Cancer Genome Atlas (TCGA). The analysis covers four cancer types: Breast Cancer (BRCA), Colon Adenocarcinoma (COAD), Lung Adenocarcinoma (LUAD), and Lung Squamous Cell Carcinoma (LUSC).
@@ -27,13 +28,15 @@ The following seven pretrained models are evaluated in this study:
 *   **KEEP**: [Astaxanthin/KEEP](https://huggingface.co/Astaxanthin/KEEP)
 *   **ViT-DinoV2**: [facebookresearch/dinov2](https://github.com/facebookresearch/dinov2)
 
+The final set of models used in the analysis are `['uni2', 'virchow2', 'prov', 'conch', 'plip', 'keep', 'dinov2']`.
+
 ## Repository Structure
 
 *   `preprocessing.py`: Script to process raw TCGA WSIs, perform stain normalization, and extract patches.
 *   `run_analysis.ipynb`: A Jupyter Notebook for conducting the full analysis pipeline on the generated embeddings. It calculates RDMs, specificity scores, and generates all figures.
 *   `generate_embeddings/`: Contains scripts to generate feature embeddings from image patches using the different models.
     *   `generate_embeddings.py`: The main script to generate embeddings for all models. It accepts the model name and GPU index as command-line arguments.
-    *   Individual model scripts (e.g., `uni.py`, `conch.ipynb`): Development scripts for generating embeddings for specific models.
+    *   `conch.ipynb`: A Jupyter Notebook specifically for generating embeddings for the CONCH model, to be used if `generate_embeddings.py` encounters issues with CONCH.
 *   `constants.py`: Defines the base directory for saving project data. **Note:** All paths are hardcoded and must be modified for your local environment.
 
 ## Getting Started
@@ -77,17 +80,25 @@ This will create subdirectories (e.g., `preprocessed_patches_BRCA/`) containing 
 
 #### 3. Generate Embeddings
 
-Embeddings are generated using the `generate_embeddings/generate_embeddings.py` script. This script requires a model name and a GPU index as command-line arguments. You will also need to add your Hugging Face access token in the script.
+Embeddings are generated using the `generate_embeddings/generate_embeddings.py` script. This script requires a model name and a GPU index as command-line arguments.
+
+**Important:** You will need to replace `YOUR_HF_TOKEN` with your actual Hugging Face access token in both `generate_embeddings.py` and `conch.ipynb` (if you use it).
+
+To run `generate_embeddings.py`, use the following format:
 
 ```bash
 # Example for generating embeddings with UNI2 on GPU 0
 python generate_embeddings/generate_embeddings.py uni2 0
 
-# Example for generating embeddings with Virchow2 on GPU 1
-python generate_embeddings/generate_embeddings.py virchow2 1
+# Example for generating embeddings with Prov-Gigapath on GPU 1
+python generate_embeddings/generate_embeddings.py prov 1
 ```
 
-Repeat this command for all models listed in the `models` array in `run_analysis.ipynb`. The script will save the embeddings in the `embeddings/` directory specified in your configuration.
+Replace `model_name` with one of the models from the list `['uni2', 'virchow2', 'prov', 'conch', 'plip', 'keep', 'dinov2']` and `gpu_index` with the desired GPU.
+
+**Note on CONCH Model:** In case the CONCH model embeddings do not get generated successfully using `generate_embeddings.py`, please use the `generate_embeddings/conch.ipynb` notebook directly to generate its embeddings.
+
+Repeat this command for all models. The script will save the embeddings in the `embeddings/` directory specified in your configuration.
 
 #### 4. Run Analysis
 

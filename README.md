@@ -104,7 +104,7 @@ All plots and results will be saved in the `plots/` and `rdms/` directories.
 
 #### Customizing Distance Functions and Batch Sizes
 
-To test other distance functions change the following snippet code:
+To test other distance functions change the following code snippet:
 
 ```python
 rdm = calc_rdm(dataset, method='euclidean')

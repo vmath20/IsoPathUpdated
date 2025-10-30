@@ -8,6 +8,7 @@ from tqdm import tqdm
 from huggingface_hub import login
 import timm
 from timm.layers import SwiGLUPacked
+from timm import create_model
 from timm.data import resolve_data_config
 from timm.data.transforms_factory import create_transform
 from transformers import AutoModel, CLIPProcessor, CLIPModel
@@ -83,7 +84,8 @@ def embed(
 
         elif model_name == 'plip':
             with torch.no_grad():
-                batch_emb = model.get_image_features(batch)
+                inputs = transform(images=batch_pil, return_tensors="pt").to(device)
+                batch_emb = model.get_image_features(batch)            
 
             opt_embs.append(batch_emb.cpu())
 
@@ -197,7 +199,8 @@ if __name__ == '__main__':
 
     login(token="YOUR_HF_TOKEN")
     model, device, preprocess = load_model(model_name, gpu_num)
-
+    os.makedirs(f"{PROJECT_SAVE_DIR}/embeddings", exist_ok=True)
+    
     for cancer_type in ['COAD', 'BRCA', 'LUSC', 'LUAD']:
         for norm_tag in ['', '-normalized']:
             print(f'Embedding {cancer_type}{norm_tag} with model {model_name} on gpu{gpu_num}')
@@ -216,9 +219,9 @@ if __name__ == '__main__':
                 assert file_patches.shape[0] == num_patches_per_slide
                 all_patches.append(file_patches)
 
-            all_patches = np.concatenate(patches_list, axis=0)
+            all_patches = np.concatenate(all_patches, axis=0)
 
-            embeddings = embed(all_patches, model, model_name, transform, device).numpy()
+            embeddings = embed(all_patches, model, model_name, preprocess, device).numpy()
 
             embeddings_path = f"{PROJECT_SAVE_DIR}/embeddings/embeddings_{cancer_type}{norm_tag}-{model_name}.npy"
             np.save(embeddings_path, embeddings)

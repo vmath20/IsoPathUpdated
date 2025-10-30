@@ -1,4 +1,4 @@
-# Representational Similarity Analysis of Computational Pathology Models
+# Comparing Computational Pathology Foundation Models using Representational Similarity Analysis
 [![Ask DeepWiki](https://devin.ai/assets/askdeepwiki.png)](https://deepwiki.com/vmath20/IsoPathUpdated)
 
 This repository contains the code and analysis pipeline for comparing the feature representations of various pretrained computational pathology models. The primary method used is Representational Similarity Analysis (RSA), applied to whole-slide image (WSI) patches from The Cancer Genome Atlas (TCGA). The analysis covers four cancer types: Breast Cancer (BRCA), Colon Adenocarcinoma (COAD), Lung Adenocarcinoma (LUAD), and Lung Squamous Cell Carcinoma (LUSC).

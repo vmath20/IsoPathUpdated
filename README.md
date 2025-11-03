@@ -36,7 +36,6 @@ The final set of models used in the analysis are `['uni2', 'virchow2', 'prov', '
 *   `run_analysis.ipynb`: A Jupyter Notebook for conducting the full analysis pipeline on the generated embeddings. It calculates RDMs, specificity scores, and generates all figures.
 *   `generate_embeddings/`: Contains scripts to generate feature embeddings from image patches using the different models.
     *   `generate_embeddings.py`: The main script to generate embeddings for all models. It accepts the model name and GPU index as command-line arguments.
-    *   `conch.ipynb`: A Jupyter Notebook specifically for generating embeddings for the CONCH model, to be used if `generate_embeddings.py` encounters issues with CONCH.
 *   `constants.py`: Defines the base directory for saving project data. **Note:** All paths are hardcoded and must be modified for your local environment.
 
 ## Getting Started
@@ -82,7 +81,7 @@ This will create subdirectories (e.g., `preprocessed_patches_BRCA/`) containing 
 
 Embeddings are generated using the `generate_embeddings/generate_embeddings.py` script. This script requires a model name and a GPU index as command-line arguments.
 
-**Important:** You will need to replace `YOUR_HF_TOKEN` with your actual Hugging Face access token in both `generate_embeddings.py` and `conch.ipynb` (if you use it).
+**Important:** You will need to replace `YOUR_HF_TOKEN` with your actual Hugging Face access token in `generate_embeddings.py`.
 
 To run `generate_embeddings.py`, use the following format:
 
@@ -95,8 +94,6 @@ python generate_embeddings/generate_embeddings.py prov 1
 ```
 
 Replace `model_name` with one of the models from the list `['uni2', 'virchow2', 'prov', 'conch', 'plip', 'keep', 'dinov2']` and `gpu_index` with the desired GPU.
-
-**Note on CONCH Model:** In case the CONCH model embeddings do not get generated successfully using `generate_embeddings.py`, please use the `generate_embeddings/conch.ipynb` notebook directly to generate its embeddings.
 
 Repeat this command for all models. The script will save the embeddings in the `embeddings/` directory specified in your configuration.
 

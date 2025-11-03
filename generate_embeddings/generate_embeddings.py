@@ -84,7 +84,6 @@ def embed(
 
         elif model_name == 'plip':
             with torch.no_grad():
-                inputs = transform(images=batch_pil, return_tensors="pt").to(device)
                 batch_emb = model.get_image_features(batch)            
 
             opt_embs.append(batch_emb.cpu())

@@ -48,15 +48,14 @@ def embed(
         batch = torch.stack(batch_transformed).to(device)
 
         if model_name == 'virchow2':
-            # Call model with Virchow2-specific processing
             with torch.no_grad():
                 output = model(batch)
                 cls_token = output[:, 0]
                 patch_tokens = output[:, 5:]
                 pooled = torch.cat([cls_token, patch_tokens.mean(1)], dim=-1)
 
-            # Copy to host and append
             opt_embs.append(pooled.cpu())
+                
         elif model_name == 'musk':
             with torch.inference_mode():
                 batch_emb = model(
@@ -72,14 +71,12 @@ def embed(
             with torch.no_grad():
                 batch_emb = model.encode_image(batch)
 
-            # Move to CPU and append
             opt_embs.append(batch_emb.cpu())
 
         elif model_name in ['uni2', 'prov', 'dinov2']:
             with torch.no_grad():
                 batch_emb = model(batch)
 
-            # Copy to host and append
             opt_embs.append(batch_emb.cpu())
 
         elif model_name == 'plip':
@@ -87,7 +84,6 @@ def embed(
                 batch_emb = model.get_image_features(batch)            
 
             opt_embs.append(batch_emb.cpu())
-
 
     # Stack to contiguous array
     opt_embs = torch.cat(opt_embs, dim=0)
@@ -147,7 +143,6 @@ def load_model(model_name, gpu_num):
     elif model_name == 'keep':
         model = AutoModel.from_pretrained("Astaxanthin/KEEP", trust_remote_code=True)
 
-        # Define transforms for KEEP
         preprocess = transforms.Compose([
             transforms.Resize(size=224, interpolation=transforms.InterpolationMode.BICUBIC),
             transforms.CenterCrop(size=(224, 224)),

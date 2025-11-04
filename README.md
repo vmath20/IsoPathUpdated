@@ -2,6 +2,8 @@
 
 [![Ask DeepWiki](https://devin.ai/assets/askdeepwiki.png)](https://deepwiki.com/vmath20/IsoPathUpdated)
 
+Vaibhav Mishra and William Lotter. [Comparing Computational Pathology Foundation Models using Representational Similarity Analysis](https://arxiv.org/abs/2509.15482). Proceedings of the 5th Machine Learning for Health (ML4H) Symposium. 2025. 
+
 This repository contains the code and analysis pipeline for comparing the feature representations of various pretrained computational pathology models. The primary method used is Representational Similarity Analysis (RSA), applied to whole-slide image (WSI) patches from The Cancer Genome Atlas (TCGA). The analysis covers four cancer types: Breast Cancer (BRCA), Colon Adenocarcinoma (COAD), Lung Adenocarcinoma (LUAD), and Lung Squamous Cell Carcinoma (LUSC).
 
 ## Project Overview
@@ -28,13 +30,12 @@ The following seven pretrained models are evaluated in this study:
 *   **KEEP**: [Astaxanthin/KEEP](https://huggingface.co/Astaxanthin/KEEP)
 *   **ViT-DinoV2**: [facebookresearch/dinov2](https://github.com/facebookresearch/dinov2)
 
-The final set of models used in the analysis are `['uni2', 'virchow2', 'prov', 'conch', 'plip', 'keep', 'dinov2']`.
 
 ## Repository Structure
 
 *   `preprocessing.py`: Script to process raw TCGA WSIs, perform stain normalization, and extract patches.
-*   `run_analysis.ipynb`: A Jupyter Notebook for conducting the full analysis pipeline on the generated embeddings. It calculates RDMs, specificity scores, and generates all figures.
 *   `generate_embeddings.py`: The main script to generate embeddings for all models. It accepts the model name and GPU index as command-line arguments.
+*   `run_analysis.ipynb`: A Jupyter Notebook for conducting the full analysis pipeline on the generated embeddings. It calculates RDMs, specificity scores, and generates all figures.
 *   `constants.py`: Defines the base directory for saving project data. **Note:** All paths are hardcoded and must be modified for your local environment.
 
 ## Getting Started

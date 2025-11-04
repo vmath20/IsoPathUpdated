@@ -25,14 +25,12 @@ def crop(im, patch_size):
     im = im[:height_crop, :width_crop, :]
     return im, n_patches_h, n_patches_w
 
-# Segment function
 def segment(thumb):
     im_gray = color.rgb2gray(thumb)
     thres = filters.threshold_otsu(im_gray)
     mask = im_gray < thres
     return mask
 
-# Patchify function
 def patchify(im, mask, patch_size, n_patches_h, n_patches_w):
     patches = []
     for i in range(n_patches_h):
